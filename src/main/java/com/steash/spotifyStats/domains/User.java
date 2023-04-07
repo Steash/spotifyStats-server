@@ -1,0 +1,106 @@
+package com.steash.spotifyStats.domains;
+
+import jakarta.persistence.*;
+
+import java.util.List;
+//import com.steash.spotifyStats.validators.NameConstraint;
+
+
+@Entity
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+//    @NameConstraint
+    private String displayName;
+
+    private String spotifyId;
+
+    private String email;
+
+    private String country;
+
+    @Column(length = 512)
+    private String avatar; // img url
+
+    private String product; // e.g. premium
+
+    private String token;
+
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    private List<TopArtist> topArtists;
+
+    // Getters & Setters
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public String getSpotifyId() {
+        return spotifyId;
+    }
+
+    public void setSpotifyId(String spotifyId) {
+        this.spotifyId = spotifyId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getProduct() {
+        return product;
+    }
+
+    public void setProduct(String product) {
+        this.product = product;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public List<TopArtist> getTopArtists() {
+        return topArtists;
+    }
+
+    public void setTopArtists(List<TopArtist> topArtists) {
+        this.topArtists = topArtists;
+    }
+}
