@@ -59,6 +59,33 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- JUnit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+<!--			<version>4.13.2</version>-->
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Spring Test -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+<!--			<version>2.6.3</version>-->
+			<scope>test</scope>
+		</dependency>
+
+<!--		&lt;!&ndash; Spotify &ndash;&gt;-->
+<!--		<dependency>-->
+<!--			<groupId>com.wrapper.spotify</groupId>-->
+<!--			<artifactId>spotify-web-api-java</artifactId>-->
+<!--&lt;!&ndash;			<version>6.10.3</version>&ndash;&gt;-->
+<!--		</dependency>-->
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20230227</version>
+		</dependency>
 <!--		<dependency>-->
 <!--			<groupId>org.hibernate.validator</groupId>-->
 <!--			<artifactId>hibernate-validator</artifactId>-->

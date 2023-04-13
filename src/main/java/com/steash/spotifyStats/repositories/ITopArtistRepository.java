@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ITopArtistRepository extends JpaRepository<TopArtist, Long> {
-    List<TopArtist> findByUser(User user);
+//    List<TopArtist> findByUser(User user);
 }

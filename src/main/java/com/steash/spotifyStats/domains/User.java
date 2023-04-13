@@ -26,7 +26,9 @@ public class User {
 
     private String product; // e.g. premium
 
-    private String token;
+    private String accessToken;
+
+    private String refreshToken;
 
     @OneToMany(mappedBy = "user", orphanRemoval = true)
     private List<TopArtist> topArtists;
@@ -88,12 +90,20 @@ public class User {
         this.product = product;
     }
 
-    public String getToken() {
-        return token;
+    public String getAccessToken() {
+        return accessToken;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
     }
 
     public List<TopArtist> getTopArtists() {

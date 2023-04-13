@@ -35,9 +35,9 @@ public class UserDtoMapper {
         userDto.setSpotifyId(user.getSpotifyId());
         userDto.setEmail(user.getEmail());
         userDto.setCountry(user.getCountry());
-        userDto.setAvatar(userDto.getAvatar());
-        userDto.setProduct(userDto.getProduct());
-        userDto.setToken(userDto.getToken());
+        userDto.setAvatar(user.getAvatar());
+        userDto.setProduct(user.getProduct());
+        userDto.setToken(user.getToken());
 
         return userDto;
     }

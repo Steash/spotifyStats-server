@@ -6,11 +6,17 @@ import com.steash.spotifyStats.domains.User;
 public class SaveTopArtistDto {
     private long id;
 
-    private Artist artist;
+//    private long artistId;
+
+    private String artistSpotifyId;
 
     private int rank;
 
-    private User user;
+    private long userId;
+
+    private String accessToken;
+
+    // Getters & Setters
 
     public long getId() {
         return id;
@@ -20,12 +26,20 @@ public class SaveTopArtistDto {
         this.id = id;
     }
 
-    public Artist getArtist() {
-        return artist;
+//    public long getArtistId() {
+//        return artistId;
+//    }
+//
+//    public void setArtistId(long artistId) {
+//        this.artistId = artistId;
+//    }
+
+    public String getArtistSpotifyId() {
+        return artistSpotifyId;
     }
 
-    public void setArtist(Artist artist) {
-        this.artist = artist;
+    public void setArtistSpotifyId(String artistSpotifyId) {
+        this.artistSpotifyId = artistSpotifyId;
     }
 
     public int getRank() {
@@ -36,11 +50,19 @@ public class SaveTopArtistDto {
         this.rank = rank;
     }
 
-    public User getUser() {
-        return user;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 }
