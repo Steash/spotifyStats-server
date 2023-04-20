@@ -9,7 +9,8 @@ public class TopArtist {
     @Column(name = "id")
     private long id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "artist_id", unique = true)
     private Artist artist;
 
     private int rank;

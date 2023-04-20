@@ -15,8 +15,10 @@ public class User {
 //    @NameConstraint
     private String displayName;
 
+    @Column(unique = true)
     private String spotifyId;
 
+    @Column(unique = true)
     private String email;
 
     private String country;

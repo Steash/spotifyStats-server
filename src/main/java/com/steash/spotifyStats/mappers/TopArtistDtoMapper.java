@@ -69,7 +69,7 @@ public class TopArtistDtoMapper {
         topArtist.setRank(saveTopArtistDto.getRank());
         topArtist.setUser(optionalUser.get());
 
-        topArtistRepository.save(topArtist);
+//        topArtistRepository.save(topArtist);
         return topArtist;
     }
 

@@ -43,7 +43,7 @@ public class TopArtistController {
     public void create(@RequestBody SaveTopArtistDto saveTopArtistDto) throws IOException {
         TopArtist topArtist = topArtistMapper.dtoToTopArtist(saveTopArtistDto);
 
-//        topArtistRepository.save(topArtist);
+        topArtistRepository.save(topArtist);
     }
 
 }

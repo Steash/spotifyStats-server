@@ -19,7 +19,8 @@ public class UserDtoMapper {
         user.setCountry(saveUserDto.getCountry());
         user.setAvatar(saveUserDto.getAvatar());
         user.setProduct(saveUserDto.getProduct());
-        user.setToken(saveUserDto.getToken());
+        user.setAccessToken(saveUserDto.getAccessToken());
+        user.setRefreshToken(saveUserDto.getRefreshToken());
 
         return user;
     }
@@ -37,7 +38,7 @@ public class UserDtoMapper {
         userDto.setCountry(user.getCountry());
         userDto.setAvatar(user.getAvatar());
         userDto.setProduct(user.getProduct());
-        userDto.setToken(user.getToken());
+//        userDto.setToken(user.getToken());
 
         return userDto;
     }

@@ -1,10 +1,7 @@
 package com.steash.spotifyStats.controllers;
 
 import com.steash.spotifyStats.domains.User;
-import com.steash.spotifyStats.dtos.user.LoginRequestDto;
-import com.steash.spotifyStats.dtos.user.LoginResponseDto;
-import com.steash.spotifyStats.dtos.user.SaveUserDto;
-import com.steash.spotifyStats.dtos.user.UserDto;
+import com.steash.spotifyStats.dtos.user.*;
 import com.steash.spotifyStats.mappers.UserDtoMapper;
 import com.steash.spotifyStats.repositories.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,32 +38,37 @@ public class UserController {
         userRepository.save(user);
     }
 
+    // Finds user by Spotify ID and sets its new tokens
     @PostMapping("/login")
     public LoginResponseDto login(@RequestBody LoginRequestDto loginRequestDto) {
-      Optional<User> userOptional = userRepository.findBySpotifyId(loginRequestDto.getSpotifyId());
-
-      User user = userOptional.get();
-
-      if (userOptional.isPresent()) {
-          // Save new tokens to User
-          user.setAccessToken(loginRequestDto.getAccessToken());
-          user.setRefreshToken(loginRequestDto.getRefreshToken());
-          userRepository.save(user);
-
-          return new LoginResponseDto(user.getId());
-      }
-
-      return null;
-    }
-
-    @PutMapping("/logout")
-    public boolean deleteUserToken(@RequestHeader("Authentication") String accessToken) {
-        Optional<User> userOptional = userRepository.findByAccessToken(accessToken);
+        // Find User
+        Optional<User> userOptional = userRepository.findBySpotifyId(
+                loginRequestDto.getSpotifyId()
+        );
 
         if (userOptional.isPresent()) {
             User user = userOptional.get();
 
-            // Delete tokens
+            // Save new tokens to User
+            user.setAccessToken(loginRequestDto.getAccessToken());
+            user.setRefreshToken(loginRequestDto.getRefreshToken());
+            userRepository.save(user);
+
+            return new LoginResponseDto(user.getId());
+        }
+
+      return null;
+    }
+    // Finds user by its User ID and clears its tokens
+    @PutMapping("/logout")
+    public boolean logout(@RequestBody LogoutRequestDto logoutRequestDto) {
+        // Find User
+        Optional<User> userOptional = userRepository.findById(logoutRequestDto.getUserId());
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+
+            // Clear tokens
             user.setAccessToken(null);
             user.setRefreshToken(null);
             userRepository.save(user);
