@@ -1,9 +1,6 @@
 package com.steash.spotifyStats.domains;
-
 import jakarta.persistence.*;
-
 import java.util.List;
-//import com.steash.spotifyStats.validators.NameConstraint;
 
 
 @Entity
@@ -26,8 +23,7 @@ public class User {
     @Column(length = 512)
     private String avatar; // img url
 
-    private String product; // e.g. premium
-
+    private String product; // e.g. premium | standard
     private String accessToken;
 
     private String refreshToken;
@@ -36,12 +32,18 @@ public class User {
     private List<TopArtist> topArtists;
 
     // Getters & Setters
+
     public long getId() {
         return id;
     }
 
     public void setId(long id) {
         this.id = id;
+//        if (this.testEnum == TestEnum.PREMIUM) {
+//
+//        }
+//        this.testEnum2.PREMIUM => "PREMIUM"
+//        this.id = id;
     }
 
     public String getDisplayName() {

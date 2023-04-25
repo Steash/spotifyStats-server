@@ -33,7 +33,7 @@ public class TopArtistDtoMapper {
     private ArtistController artistController;
 
     private SpotifyApiService spotifyApiService;
-    public TopArtist dtoToTopArtist(SaveTopArtistDto saveTopArtistDto) throws IOException {
+    public TopArtist dtoToTopArtist(SaveTopArtistDto saveTopArtistDto) {
         /*
          * Used to create a TopArtist object from a SaveTopArtist object
          */
@@ -42,34 +42,16 @@ public class TopArtistDtoMapper {
         // Get Artist object from Artist Spotify ID
         Optional<Artist> optionalArtist = artistRepository.findBySpotifyId(saveTopArtistDto.getArtistSpotifyId());
 
-        // Create Artist object if it doesn't already exist
-        if (optionalArtist.isEmpty()) {
-
-            // Call spotify service to retrieve artistDto
-            SaveArtistDto saveArtistDto = spotifyApiService.getArtistJson(
-                    saveTopArtistDto.getArtistSpotifyId(), saveTopArtistDto.getAccessToken()
-            );
-
-            // Create an Artist object from the retrieved artistDto
-//            artistController.createArtist(saveArtistDto);
-            Artist artist = artistMapper.dtoToArtist(saveArtistDto);
-            artistRepository.save(artist);
-
-            optionalArtist = artistRepository.findBySpotifyId(saveTopArtistDto.getArtistSpotifyId());
-//            return null;
-        }
-
         // Get User object from User ID
         Optional<User> optionalUser = userRepository.findById(saveTopArtistDto.getUserId());
         if (optionalUser.isEmpty()) {
-            return null;
+            throw new IllegalArgumentException("User with ID " + saveTopArtistDto.getUserId() + " does not exist.");
         }
 
         topArtist.setArtist(optionalArtist.get());
         topArtist.setRank(saveTopArtistDto.getRank());
         topArtist.setUser(optionalUser.get());
 
-//        topArtistRepository.save(topArtist);
         return topArtist;
     }
 

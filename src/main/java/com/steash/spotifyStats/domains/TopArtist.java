@@ -1,5 +1,6 @@
 package com.steash.spotifyStats.domains;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,9 +14,11 @@ public class TopArtist {
     @JoinColumn(name = "artist_id", unique = true)
     private Artist artist;
 
+    @Column(unique = true)
     private int rank;
 
     @ManyToOne
+    @JsonIgnore
     private User user;
 
     // Getters & Setters

@@ -1,12 +1,15 @@
 package com.steash.spotifyStats.controllers;
 
+import com.steash.spotifyStats.domains.TopArtist;
 import com.steash.spotifyStats.domains.User;
 import com.steash.spotifyStats.dtos.user.*;
 import com.steash.spotifyStats.mappers.UserDtoMapper;
 import com.steash.spotifyStats.repositories.IUserRepository;
+import com.steash.spotifyStats.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -21,6 +24,9 @@ public class UserController {
     @Autowired
     private IUserRepository userRepository;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/get")
     public Stream<UserDto> findAll() {
         return userRepository.findAll().stream().map(userMapper::userToDto);
@@ -30,6 +36,11 @@ public class UserController {
     public Optional<UserDto> find(@PathVariable long id) {
         return Optional.of(userMapper.userToDto(userRepository.findById(id).get()));
     }
+
+//    @GetMapping("/get/{id}/topArtists")
+//    public List<TopArtist> getTopArtists(@PathVariable long id) {
+//        return userService.getAllTopArtistsForUser((id));
+//    }
 
     @PostMapping("/create")
     public void create(@RequestBody SaveUserDto saveUserDto) {

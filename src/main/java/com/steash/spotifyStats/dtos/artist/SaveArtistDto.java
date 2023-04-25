@@ -1,18 +1,19 @@
 package com.steash.spotifyStats.dtos.artist;
 
-public class SaveArtistDto {
-    private long id;
+import jakarta.persistence.Column;
 
+public class SaveArtistDto {
+    private String spotifyId;
     private String name;
 
-    private String spotifyId;
+    private String avatar;
 
-    public long getId() {
-        return id;
-    }
+    public String getSpotifyId() {
+    return spotifyId;
+}
 
-    public void setId(long id) {
-        this.id = id;
+    public void setSpotifyId(String spotifyId) {
+        this.spotifyId = spotifyId;
     }
 
     public String getName() {
@@ -23,11 +24,11 @@ public class SaveArtistDto {
         this.name = name;
     }
 
-    public String getSpotifyId() {
-        return spotifyId;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setSpotifyId(String spotifyId) {
-        this.spotifyId = spotifyId;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

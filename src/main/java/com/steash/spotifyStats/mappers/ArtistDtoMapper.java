@@ -14,8 +14,9 @@ public class ArtistDtoMapper {
          * Used to create a Artist object from a SaveArtistDto object
          */
         Artist artist = new Artist();
-        artist.setName(saveArtistDto.getName());
         artist.setSpotifyId(saveArtistDto.getSpotifyId());
+        artist.setName(saveArtistDto.getName());
+        artist.setAvatar(saveArtistDto.getAvatar());
 
         return artist;
     }
@@ -26,12 +27,10 @@ public class ArtistDtoMapper {
          */
         ArtistDto artistDto = new ArtistDto();
 
-        artistDto.setId(artist.getId());
-        artistDto.setName(artist.getName());
         artistDto.setSpotifyId(artist.getSpotifyId());
+        artistDto.setName(artist.getName());
+        artistDto.setAvatar(artist.getAvatar());
 
         return artistDto;
     }
-
-
 }

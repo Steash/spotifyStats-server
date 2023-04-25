@@ -1,20 +1,17 @@
 package com.steash.spotifyStats.dtos.topArtist;
 
-import com.steash.spotifyStats.domains.Artist;
-import com.steash.spotifyStats.domains.User;
-
 public class SaveTopArtistDto {
     private long id;
 
-//    private long artistId;
-
     private String artistSpotifyId;
+
+    private String artistName;
 
     private int rank;
 
-    private long userId;
+    private String avatar;
 
-    private String accessToken;
+    private long userId;
 
     // Getters & Setters
 
@@ -26,20 +23,20 @@ public class SaveTopArtistDto {
         this.id = id;
     }
 
-//    public long getArtistId() {
-//        return artistId;
-//    }
-//
-//    public void setArtistId(long artistId) {
-//        this.artistId = artistId;
-//    }
-
     public String getArtistSpotifyId() {
         return artistSpotifyId;
     }
 
     public void setArtistSpotifyId(String artistSpotifyId) {
         this.artistSpotifyId = artistSpotifyId;
+    }
+
+    public String getArtistName() {
+        return artistName;
+    }
+
+    public void setArtistName(String artistName) {
+        this.artistName = artistName;
     }
 
     public int getRank() {
@@ -50,6 +47,14 @@ public class SaveTopArtistDto {
         this.rank = rank;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     public long getUserId() {
         return userId;
     }
@@ -58,11 +63,4 @@ public class SaveTopArtistDto {
         this.userId = userId;
     }
 
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
 }
