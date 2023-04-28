@@ -6,13 +6,11 @@ import com.steash.spotifyStats.domains.User;
 import com.steash.spotifyStats.dtos.artist.SaveArtistDto;
 import com.steash.spotifyStats.dtos.topArtist.SaveTopArtistDto;
 import com.steash.spotifyStats.dtos.topArtist.TopArtistDto;
+import com.steash.spotifyStats.dtos.topArtist.TopArtistUserDto;
 import com.steash.spotifyStats.dtos.topArtist.UserTopArtistDto;
 import com.steash.spotifyStats.dtos.user.SaveUserDto;
 import com.steash.spotifyStats.dtos.user.UserDto;
-import com.steash.spotifyStats.mappers.ArtistDtoMapper;
-import com.steash.spotifyStats.mappers.TopArtistDtoMapper;
-import com.steash.spotifyStats.mappers.TopArtistToArtistMapper;
-import com.steash.spotifyStats.mappers.UserTopArtistMapper;
+import com.steash.spotifyStats.mappers.*;
 import com.steash.spotifyStats.repositories.IArtistRepository;
 import com.steash.spotifyStats.repositories.ITopArtistRepository;
 import com.steash.spotifyStats.repositories.IUserRepository;
@@ -51,6 +49,9 @@ public class TopArtistController {
     @Autowired
     private UserTopArtistMapper userTopArtistMapper;
 
+    @Autowired
+    private TopArtistToUserMapper topArtistToUserMapper;
+
     @GetMapping("/get")
     public Stream<TopArtistDto> findAll() {
         return topArtistRepository.findAll().stream().map(topArtistDtoMapper::topArtistToDto);
@@ -66,6 +67,23 @@ public class TopArtistController {
         User user = userRepository.findById(userId).orElseThrow();
         return topArtistRepository.findAllByUser(user).stream().map(userTopArtistMapper::userTopArtistDto);
 //        return Optional.of(userTopArtistMapper.userTopArtistDto(userRepository.findById(userId).get()));
+    }
+
+    @GetMapping("/get/mutual-fans")
+    public ResponseEntity<Stream<TopArtistUserDto>> findCommonFans(@RequestParam String artistSpotifyId, @RequestParam String userSpotifyId) {
+        Optional<Artist> artist = artistRepository.findBySpotifyId(artistSpotifyId);
+        Optional<User> user = userRepository.findBySpotifyId(userSpotifyId);
+        if (!artist.isPresent() || !user.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        List<TopArtist> topArtists = topArtistRepository.findAllByArtistAndUserNot(artist.get(), user.get());
+        if (topArtists.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        Stream<TopArtistUserDto> usersWithSameTopArtist = topArtists.stream()
+                .map(topArtistToUserMapper::topArtistUserDto);
+
+        return ResponseEntity.ok(usersWithSameTopArtist);
     }
 
     @PostMapping("/create")
