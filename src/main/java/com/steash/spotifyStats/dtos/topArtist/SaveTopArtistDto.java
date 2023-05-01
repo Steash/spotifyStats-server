@@ -11,10 +11,9 @@ public class SaveTopArtistDto {
 
     private String avatar;
 
-    private long userId;
+    private String userSpotifyId;
 
     // Getters & Setters
-
     public long getId() {
         return id;
     }
@@ -55,12 +54,11 @@ public class SaveTopArtistDto {
         this.avatar = avatar;
     }
 
-    public long getUserId() {
-        return userId;
+    public String getUserSpotifyId() {
+        return userSpotifyId;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setUserSpotifyId(String userSpotifyId) {
+        this.userSpotifyId = userSpotifyId;
     }
-
 }

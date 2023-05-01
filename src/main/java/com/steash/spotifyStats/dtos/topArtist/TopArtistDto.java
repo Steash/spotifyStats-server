@@ -13,7 +13,7 @@ public class TopArtistDto {
 
     private String userDisplayName;
 
-    private long userId;
+    private String userSpotifyId;
 
     // Getters & Setters
 
@@ -66,11 +66,11 @@ public class TopArtistDto {
         this.avatar = avatar;
     }
 
-    public long getUserId() {
-        return userId;
+    public String getUserSpotifyId() {
+        return userSpotifyId;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setUserSpotifyId(String userSpotifyId) {
+        this.userSpotifyId = userSpotifyId;
     }
 }

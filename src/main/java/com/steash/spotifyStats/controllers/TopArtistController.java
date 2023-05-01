@@ -4,10 +4,7 @@ import com.steash.spotifyStats.domains.Artist;
 import com.steash.spotifyStats.domains.TopArtist;
 import com.steash.spotifyStats.domains.User;
 import com.steash.spotifyStats.dtos.artist.SaveArtistDto;
-import com.steash.spotifyStats.dtos.topArtist.SaveTopArtistDto;
-import com.steash.spotifyStats.dtos.topArtist.TopArtistDto;
-import com.steash.spotifyStats.dtos.topArtist.TopArtistUserDto;
-import com.steash.spotifyStats.dtos.topArtist.UserTopArtistDto;
+import com.steash.spotifyStats.dtos.topArtist.*;
 import com.steash.spotifyStats.dtos.user.SaveUserDto;
 import com.steash.spotifyStats.dtos.user.UserDto;
 import com.steash.spotifyStats.mappers.*;
@@ -52,6 +49,9 @@ public class TopArtistController {
     @Autowired
     private TopArtistToUserMapper topArtistToUserMapper;
 
+    @Autowired
+    private MutualTopArtistMapper mutualTopArtistMapper;
+
     @GetMapping("/get")
     public Stream<TopArtistDto> findAll() {
         return topArtistRepository.findAll().stream().map(topArtistDtoMapper::topArtistToDto);
@@ -62,15 +62,16 @@ public class TopArtistController {
         return Optional.of(topArtistDtoMapper.topArtistToDto(topArtistRepository.findById(id).get()));
     }
 
-    @GetMapping("/get/user/{userId}")
-    public Stream<UserTopArtistDto> findMyTopArtists(@PathVariable long userId) {
-        User user = userRepository.findById(userId).orElseThrow();
+    @GetMapping("/get/user/{userSpotifyId}")
+    public Stream<UserTopArtistDto> findMyTopArtists(@PathVariable String userSpotifyId) {
+        User user = userRepository.findBySpotifyId(userSpotifyId).orElseThrow();
         return topArtistRepository.findAllByUser(user).stream().map(userTopArtistMapper::userTopArtistDto);
 //        return Optional.of(userTopArtistMapper.userTopArtistDto(userRepository.findById(userId).get()));
     }
 
     @GetMapping("/get/mutual-fans")
-    public ResponseEntity<Stream<TopArtistUserDto>> findCommonFans(@RequestParam String artistSpotifyId, @RequestParam String userSpotifyId) {
+    public ResponseEntity<Stream<TopArtistUserDto>> findCommonFans(@RequestParam String artistSpotifyId,
+                                                                   @RequestParam String userSpotifyId) {
         Optional<Artist> artist = artistRepository.findBySpotifyId(artistSpotifyId);
         Optional<User> user = userRepository.findBySpotifyId(userSpotifyId);
         if (!artist.isPresent() || !user.isPresent()) {
@@ -86,7 +87,22 @@ public class TopArtistController {
         return ResponseEntity.ok(usersWithSameTopArtist);
     }
 
+    @GetMapping("/get/mutual-topArtists")
+    public ResponseEntity<Stream<MutualTopArtistDto>> findMutualTopArtists(@RequestParam String userSpotifyId1,
+                                                                           @RequestParam String userSpotifyId2) {
+        List<TopArtist> commonTopArtists = topArtistRepository.findCommonTopArtists(userSpotifyId1, userSpotifyId2);
+        if (commonTopArtists.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Stream<MutualTopArtistDto> mutualTopArtistDtoStream = commonTopArtists.stream()
+                .map(mutualTopArtistMapper::mutualTopArtistDto);
+
+        return ResponseEntity.ok(mutualTopArtistDtoStream);
+    }
+
     @PostMapping("/create")
+
     public void create(@RequestBody SaveTopArtistDto saveTopArtistDto) {
         TopArtist topArtist = topArtistDtoMapper.dtoToTopArtist(saveTopArtistDto);
 
@@ -120,7 +136,6 @@ public class TopArtistController {
 
         return ResponseEntity.ok("Top artists added successfully.");
     }
-
 
 
 }

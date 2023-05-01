@@ -5,13 +5,11 @@ import java.util.List;
 
 @Entity
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
 
 //    @NameConstraint
     private String displayName;
 
+    @Id
     @Column(unique = true)
     private String spotifyId;
 
@@ -32,19 +30,11 @@ public class User {
     private List<TopArtist> topArtists;
 
     // Getters & Setters
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
 //        if (this.testEnum == TestEnum.PREMIUM) {
 //
 //        }
 //        this.testEnum2.PREMIUM => "PREMIUM"
 //        this.id = id;
-    }
 
     public String getDisplayName() {
         return displayName;

@@ -1,17 +1,17 @@
 package com.steash.spotifyStats.dtos.user;
 
 public class LoginResponseDto {
-    private long userId;
+    private String userSpotifyId;
 
-    public LoginResponseDto(long userId) {
-        this.userId = userId;
+    public LoginResponseDto(String userSpotifyId) {
+        this.userSpotifyId = userSpotifyId;
     }
 
-    public long getUserId() {
-        return userId;
+    public String getUserSpotifyId() {
+        return userSpotifyId;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setUserSpotifyId(String userSpotifyId) {
+        this.userSpotifyId = userSpotifyId;
     }
 }

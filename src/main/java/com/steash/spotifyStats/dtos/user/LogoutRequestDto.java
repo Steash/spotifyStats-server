@@ -2,14 +2,14 @@ package com.steash.spotifyStats.dtos.user;
 
 public class LogoutRequestDto {
 
-    private long userId;
+    private String userSpotifyId;
 
-    public long getUserId() {
-        return userId;
+    public String getUserSpotifyId() {
+        return userSpotifyId;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setUserSpotifyId(String userSpotifyId) {
+        this.userSpotifyId = userSpotifyId;
     }
 
 

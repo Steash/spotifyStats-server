@@ -43,9 +43,9 @@ public class TopArtistDtoMapper {
         Optional<Artist> optionalArtist = artistRepository.findBySpotifyId(saveTopArtistDto.getArtistSpotifyId());
 
         // Get User object from User ID
-        Optional<User> optionalUser = userRepository.findById(saveTopArtistDto.getUserId());
+        Optional<User> optionalUser = userRepository.findBySpotifyId(saveTopArtistDto.getUserSpotifyId());
         if (optionalUser.isEmpty()) {
-            throw new IllegalArgumentException("User with ID " + saveTopArtistDto.getUserId() + " does not exist.");
+            throw new IllegalArgumentException("User with ID " + saveTopArtistDto.getUserSpotifyId() + " does not exist.");
         }
 
         topArtist.setArtist(optionalArtist.get());
@@ -67,7 +67,7 @@ public class TopArtistDtoMapper {
         topArtistDto.setArtistSpotifyId(topArtist.getArtist().getSpotifyId());
         topArtistDto.setRank(topArtist.getRank());
         topArtistDto.setUserDisplayName(topArtist.getUser().getDisplayName());
-        topArtistDto.setUserId(topArtist.getUser().getId());
+        topArtistDto.setUserSpotifyId(topArtist.getUser().getSpotifyId());
 
         return topArtistDto;
     }

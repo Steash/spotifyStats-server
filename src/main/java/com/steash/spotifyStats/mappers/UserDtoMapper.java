@@ -31,14 +31,12 @@ public class UserDtoMapper {
          */
         UserDto userDto = new UserDto();
 
-        userDto.setId(user.getId());
         userDto.setDisplayName(user.getDisplayName());
         userDto.setSpotifyId(user.getSpotifyId());
         userDto.setEmail(user.getEmail());
         userDto.setCountry(user.getCountry());
         userDto.setAvatar(user.getAvatar());
         userDto.setProduct(user.getProduct());
-//        userDto.setToken(user.getToken());
 
         return userDto;
     }
