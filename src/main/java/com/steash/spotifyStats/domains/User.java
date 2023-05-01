@@ -1,22 +1,19 @@
 package com.steash.spotifyStats.domains;
-
 import jakarta.persistence.*;
-
 import java.util.List;
-//import com.steash.spotifyStats.validators.NameConstraint;
 
 
 @Entity
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
 
 //    @NameConstraint
     private String displayName;
 
+    @Id
+    @Column(unique = true)
     private String spotifyId;
 
+    @Column(unique = true)
     private String email;
 
     private String country;
@@ -24,21 +21,20 @@ public class User {
     @Column(length = 512)
     private String avatar; // img url
 
-    private String product; // e.g. premium
+    private String product; // e.g. premium | standard
+    private String accessToken;
 
-    private String token;
+    private String refreshToken;
 
     @OneToMany(mappedBy = "user", orphanRemoval = true)
     private List<TopArtist> topArtists;
 
     // Getters & Setters
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
+//        if (this.testEnum == TestEnum.PREMIUM) {
+//
+//        }
+//        this.testEnum2.PREMIUM => "PREMIUM"
+//        this.id = id;
 
     public String getDisplayName() {
         return displayName;
@@ -88,12 +84,20 @@ public class User {
         this.product = product;
     }
 
-    public String getToken() {
-        return token;
+    public String getAccessToken() {
+        return accessToken;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
     }
 
     public List<TopArtist> getTopArtists() {

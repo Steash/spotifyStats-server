@@ -19,7 +19,8 @@ public class UserDtoMapper {
         user.setCountry(saveUserDto.getCountry());
         user.setAvatar(saveUserDto.getAvatar());
         user.setProduct(saveUserDto.getProduct());
-        user.setToken(saveUserDto.getToken());
+        user.setAccessToken(saveUserDto.getAccessToken());
+        user.setRefreshToken(saveUserDto.getRefreshToken());
 
         return user;
     }
@@ -30,14 +31,12 @@ public class UserDtoMapper {
          */
         UserDto userDto = new UserDto();
 
-        userDto.setId(user.getId());
         userDto.setDisplayName(user.getDisplayName());
         userDto.setSpotifyId(user.getSpotifyId());
         userDto.setEmail(user.getEmail());
         userDto.setCountry(user.getCountry());
-        userDto.setAvatar(userDto.getAvatar());
-        userDto.setProduct(userDto.getProduct());
-        userDto.setToken(userDto.getToken());
+        userDto.setAvatar(user.getAvatar());
+        userDto.setProduct(user.getProduct());
 
         return userDto;
     }

@@ -1,7 +1,9 @@
 package com.steash.spotifyStats.dtos.topArtist;
 
-public class TopArtistDto {
-    private long id;
+import jakarta.persistence.Column;
+
+public class UserTopArtistDto {
+
 
     private String artistName;
 
@@ -9,22 +11,7 @@ public class TopArtistDto {
 
     private int rank;
 
-    private String avatar;
-
-    private String userDisplayName;
-
-    private String userSpotifyId;
-
-    // Getters & Setters
-
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
+    private String avatar; // img url
 
     public String getArtistName() {
         return artistName;
@@ -50,27 +37,11 @@ public class TopArtistDto {
         this.rank = rank;
     }
 
-    public String getUserDisplayName() {
-        return userDisplayName;
-    }
-
-    public void setUserDisplayName(String userDisplayName) {
-        this.userDisplayName = userDisplayName;
-    }
-
     public String getAvatar() {
         return avatar;
     }
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
-    }
-
-    public String getUserSpotifyId() {
-        return userSpotifyId;
-    }
-
-    public void setUserSpotifyId(String userSpotifyId) {
-        this.userSpotifyId = userSpotifyId;
     }
 }

@@ -1,21 +1,24 @@
 package com.steash.spotifyStats.domains;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
-public class TopArtist {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private long id;
+    public class TopArtist {
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @Column(name = "id")
+        private long id;
 
-    @ManyToOne(optional = false)
-    private Artist artist;
+        @ManyToOne(optional = true)
+        @JoinColumn(name = "artist_id")
+        private Artist artist;
 
-    private int rank;
+        private int rank;
 
-    @ManyToOne
-    private User user;
+        @ManyToOne
+        @JsonIgnore
+        private User user;
 
     // Getters & Setters
     public long getId() {

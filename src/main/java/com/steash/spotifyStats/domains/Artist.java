@@ -6,13 +6,18 @@ import java.util.List;
 
 @Entity
 public class Artist {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private long id;
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @Column(unique = true)
+    private String spotifyId;
 
     private String name;
 
-    private String spotifyId;
+    @Column(length = 512)
+    private String avatar; // img url
 
     @OneToMany(mappedBy = "artist", orphanRemoval = true)
     private List<TopArtist> topArtists;
@@ -22,13 +27,13 @@ public class Artist {
     // private Genre genres
 
     // Getters & Setters
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
+//    public long getId() {
+//        return id;
+//    }
+//
+//    public void setId(long id) {
+//        this.id = id;
+//    }
 
     public String getName() {
         return name;
@@ -46,7 +51,17 @@ public class Artist {
         this.spotifyId = spotifyId;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     public List<TopArtist> getTopArtists() {
+
+
         return topArtists;
     }
 

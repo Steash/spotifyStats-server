@@ -1,7 +1,6 @@
 package com.steash.spotifyStats.dtos.user;
 
 public class SaveUserDto {
-    private long id;
 
     private String displayName;
 
@@ -15,15 +14,9 @@ public class SaveUserDto {
 
     private String product; // e.g. premium
 
-    private String token;
+    private String accessToken;
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
+    private String refreshToken;
 
     public String getDisplayName() {
         return displayName;
@@ -73,11 +66,19 @@ public class SaveUserDto {
         this.product = product;
     }
 
-    public String getToken() {
-        return token;
+    public String getAccessToken() {
+        return accessToken;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
     }
 }
