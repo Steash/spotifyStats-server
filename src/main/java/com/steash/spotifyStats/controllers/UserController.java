@@ -32,7 +32,7 @@ public class UserController {
         return userRepository.findAll().stream().map(userMapper::userToDto);
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/get/{spotifyId}")
     public Optional<UserDto> find(@PathVariable String spotifyId) {
         return Optional.of(userMapper.userToDto(userRepository.findBySpotifyId(spotifyId).get()));
     }
