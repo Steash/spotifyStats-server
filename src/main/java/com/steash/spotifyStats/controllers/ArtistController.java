@@ -1,14 +1,19 @@
 package com.steash.spotifyStats.controllers;
 
 import com.steash.spotifyStats.domains.Artist;
-import com.steash.spotifyStats.domains.TopArtist;
+import com.steash.spotifyStats.domains.User;
 import com.steash.spotifyStats.dtos.artist.ArtistDto;
 import com.steash.spotifyStats.dtos.artist.SaveArtistDto;
-import com.steash.spotifyStats.dtos.topArtist.SaveTopArtistDto;
-import com.steash.spotifyStats.dtos.topArtist.TopArtistDto;
+import com.steash.spotifyStats.dtos.user.SearchReqDto;
+import com.steash.spotifyStats.dtos.user.SearchRspDto;
+import com.steash.spotifyStats.dtos.user.UserDto;
 import com.steash.spotifyStats.mappers.ArtistDtoMapper;
 import com.steash.spotifyStats.repositories.IArtistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -72,4 +77,32 @@ public class ArtistController {
 //
 //        artistRepository.save(artist);
 //    }
+
+    @PostMapping("/search")
+    public ResponseEntity<SearchRspDto<ArtistDto>> getArtistSearchResult(@RequestBody SearchReqDto searchReqDto) {
+        Pageable pageable = PageRequest.of(
+                searchReqDto.getPageNumber(),
+                searchReqDto.getNumberPerPage(),
+                Sort.by(Sort.Direction.fromString(searchReqDto.getDirectionOfSort()),
+                        searchReqDto.getPropertyToSortBy())
+        );
+
+        Page<Artist> page = artistRepository.findByNameContaining(
+                searchReqDto.getSearchTerm(), pageable
+        );
+
+        if (page.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        SearchRspDto<ArtistDto> responseDto = new SearchRspDto<>(
+                searchReqDto.getNumberPerPage(),
+                page.getTotalPages(),
+                page.getNumberOfElements(),
+                page.getContent().stream()
+                        .map(artistMapper::artistToDto).toList()
+        );
+
+        return ResponseEntity.ok().body(responseDto);
+    }
 }
