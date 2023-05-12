@@ -1,6 +1,6 @@
 package com.steash.spotifyStats.dtos.user;
 
-public class SearchUserReqDto {
+public class SearchReqDto {
 
     private String searchTerm;
 
@@ -53,12 +53,4 @@ public class SearchUserReqDto {
     public void setNumberPerPage(int numberPerPage) {
         this.numberPerPage = numberPerPage;
     }
-
-//    public boolean isOpen() {
-//        return open;
-//    }
-//
-//    public void setOpen(boolean open) {
-//        this.open = open;
-//    }
 }

@@ -1,20 +1,18 @@
 package com.steash.spotifyStats.dtos.user;
 
-import jakarta.persistence.Column;
-
 import java.util.List;
 
-public class SearchUserRspDto<O extends Object> {
+public class SearchRspDto<O extends Object> {
     private int page;
     private int totalPages;
     private int elementCount;
     private List<O> content;
 
-    public SearchUserRspDto() {
+    public SearchRspDto() {
 
     }
 
-    public SearchUserRspDto(int page, int totalPages, int elementCount, List<O> content) {
+    public SearchRspDto(int page, int totalPages, int elementCount, List<O> content) {
         this.page = page;
         this.totalPages = totalPages;
         this.elementCount = elementCount;

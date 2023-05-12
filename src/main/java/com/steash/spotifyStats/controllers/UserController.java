@@ -32,7 +32,7 @@ public class UserController {
         return userRepository.findAll().stream().map(userMapper::userToDto);
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/get/{spotifyId}")
     public Optional<UserDto> find(@PathVariable String spotifyId) {
         return Optional.of(userMapper.userToDto(userRepository.findBySpotifyId(spotifyId).get()));
     }
@@ -43,16 +43,16 @@ public class UserController {
 //    }
 
     @PostMapping("/search")
-    public ResponseEntity<SearchUserRspDto<UserDto>> getUserSearchResult(@RequestBody SearchUserReqDto searchUserReqDto) {
+    public ResponseEntity<SearchRspDto<UserDto>> getUserSearchResult(@RequestBody SearchReqDto searchReqDto) {
         Pageable pageable = PageRequest.of(
-            searchUserReqDto.getPageNumber(),
-            searchUserReqDto.getNumberPerPage(),
-            Sort.by(Sort.Direction.fromString(searchUserReqDto.getDirectionOfSort()),
-            searchUserReqDto.getPropertyToSortBy())
+            searchReqDto.getPageNumber(),
+            searchReqDto.getNumberPerPage(),
+            Sort.by(Sort.Direction.fromString(searchReqDto.getDirectionOfSort()),
+            searchReqDto.getPropertyToSortBy())
         );
 
         Page<User> page = userRepository.findByDisplayNameContainingOrSpotifyIdContainingOrEmailContaining(
-            searchUserReqDto.getSearchTerm(), searchUserReqDto.getSearchTerm(), searchUserReqDto.getSearchTerm(), pageable
+            searchReqDto.getSearchTerm(), searchReqDto.getSearchTerm(), searchReqDto.getSearchTerm(), pageable
         );
 
 //        return page.isEmpty() ? Page.empty() : new PageImpl<>(
@@ -65,8 +65,8 @@ public class UserController {
             return ResponseEntity.noContent().build();
         }
 
-        SearchUserRspDto<UserDto> responseDto = new SearchUserRspDto<>(
-                searchUserReqDto.getNumberPerPage(),
+        SearchRspDto<UserDto> responseDto = new SearchRspDto<>(
+                searchReqDto.getNumberPerPage(),
                 page.getTotalPages(),
                 page.getNumberOfElements(),
                 page.getContent().stream()
@@ -85,7 +85,7 @@ public class UserController {
 
     // Finds user by Spotify ID and sets its new tokens
     @PostMapping("/login")
-    public LoginResponseDto login(@RequestBody LoginRequestDto loginRequestDto) {
+    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequestDto) {
         // Find User
         Optional<User> userOptional = userRepository.findBySpotifyId(
                 loginRequestDto.getSpotifyId()
@@ -99,14 +99,14 @@ public class UserController {
             user.setRefreshToken(loginRequestDto.getRefreshToken());
             userRepository.save(user);
 
-            return new LoginResponseDto(user.getSpotifyId());
+            return ResponseEntity.ok().body(new LoginResponseDto(user.getSpotifyId()));
         }
 
-      return null;
+      return ResponseEntity.noContent().build();
     }
     // Finds user by its User ID and clears its tokens
     @PutMapping("/logout")
-    public boolean logout(@RequestBody LogoutRequestDto logoutRequestDto) {
+    public ResponseEntity logout(@RequestBody LogoutRequestDto logoutRequestDto) {
         // Find User
         Optional<User> userOptional = userRepository.findBySpotifyId(logoutRequestDto.getUserSpotifyId());
 
@@ -118,8 +118,8 @@ public class UserController {
             user.setRefreshToken(null);
             userRepository.save(user);
 
-            return true;
+            return ResponseEntity.ok("Successfully logged out");
         }
-        return false;
+        return ResponseEntity.notFound().build();
     }
 }
