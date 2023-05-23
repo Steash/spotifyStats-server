@@ -62,7 +62,7 @@ public class ArtistController {
             return ResponseEntity.ok("Artists added successfully.");
         }
 
-        return ResponseEntity.ok("All artists already exist in the database.");
+        return ResponseEntity.badRequest().body("All artists already exist in the database.");
     }
 
 

@@ -29,6 +29,22 @@ public class User {
     @OneToMany(mappedBy = "user", orphanRemoval = true)
     private List<TopArtist> topArtists;
 
+    @ManyToMany
+    @JoinTable(
+            name = "friend_requests",
+            joinColumns = @JoinColumn(name = "receiver_id"),
+            inverseJoinColumns = @JoinColumn(name = "sender_id")
+    )
+    private List<User> receivedFriendRequests;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_friends",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "friend_id")
+    )
+    private List<User> friends;
+
     // Getters & Setters
 //        if (this.testEnum == TestEnum.PREMIUM) {
 //
@@ -106,5 +122,50 @@ public class User {
 
     public void setTopArtists(List<TopArtist> topArtists) {
         this.topArtists = topArtists;
+    }
+
+    public List<User> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<User> friends) {
+        this.friends = friends;
+    }
+
+    public boolean acceptFriend(User friend) {
+        if (friends.contains(friend)) {
+            return false;
+        }
+
+        friends.add(friend);
+        friend.getFriends().add(this);
+        return true;
+    }
+
+    public void deleteFriend(User friend) {
+        // Remove friend both ways
+        friends.remove(friend);
+        friend.getFriends().remove(this);
+    }
+
+    public List<User> getReceivedFriendRequests() {
+        return receivedFriendRequests;
+    }
+
+    public void setReceivedFriendRequests(List<User> receivedFriendRequests) {
+        this.receivedFriendRequests = receivedFriendRequests;
+    }
+
+    public boolean addToReceivedFriendRequest(User sender) {
+        if (receivedFriendRequests.contains(sender)) {
+            return false;
+        }
+
+        receivedFriendRequests.add(sender);
+        return true;
+    }
+
+    public void removeFriendRequestFrom(User currentUser) {
+        receivedFriendRequests.remove(currentUser);
     }
 }
