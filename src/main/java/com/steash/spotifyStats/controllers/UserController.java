@@ -17,9 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -182,6 +180,13 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("No common top artists were found with anyone on your friends list.");
         }
+
+        // Sort musicBuddies in descending order on mutualTopArtist field
+        Comparator<MusicBuddyDto> comparator = Comparator.comparingInt(dto -> dto.getMutualTopArtists().size());
+        comparator = comparator.reversed();
+        Collections.sort(musicBuddies, comparator);
+
+//        Collections.sort(musicBuddies, Compara);
 
         return ResponseEntity.ok().body(musicBuddies);
     }

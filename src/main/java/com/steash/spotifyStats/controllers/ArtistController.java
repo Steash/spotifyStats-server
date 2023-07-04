@@ -1,9 +1,11 @@
 package com.steash.spotifyStats.controllers;
 
 import com.steash.spotifyStats.domains.Artist;
+import com.steash.spotifyStats.domains.TopArtist;
 import com.steash.spotifyStats.domains.User;
 import com.steash.spotifyStats.dtos.artist.ArtistDto;
 import com.steash.spotifyStats.dtos.artist.SaveArtistDto;
+import com.steash.spotifyStats.dtos.topArtist.SaveTopArtistDto;
 import com.steash.spotifyStats.dtos.user.SearchReqDto;
 import com.steash.spotifyStats.dtos.user.SearchRspDto;
 import com.steash.spotifyStats.dtos.user.UserDto;
@@ -105,4 +107,5 @@ public class ArtistController {
 
         return ResponseEntity.ok().body(responseDto);
     }
+
 }

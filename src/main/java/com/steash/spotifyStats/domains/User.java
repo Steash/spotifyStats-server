@@ -124,6 +124,10 @@ public class User {
         this.topArtists = topArtists;
     }
 
+    public void clearTopArtists() {
+        this.topArtists.clear();
+    }
+
     public List<User> getFriends() {
         return friends;
     }

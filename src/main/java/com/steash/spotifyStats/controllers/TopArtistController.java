@@ -110,22 +110,28 @@ public class TopArtistController {
     }
 
     @PostMapping("/create/multiple")
-    public ResponseEntity createTopArtists(@RequestBody SaveTopArtistDto[] saveTopArtistDtos) {
+    public ResponseEntity<?> createTopArtists(@RequestBody SaveTopArtistDto[] saveTopArtistDtos) {
+        // Grab user
+        String userSpotifyId = saveTopArtistDtos[0].getUserSpotifyId();
+        User user = userRepository.findBySpotifyId(userSpotifyId).orElse(null);
+
+        // Clear user's current TopArtists
+        if (user == null) {
+            return ResponseEntity.badRequest().body("User: " + userSpotifyId + " not found.");
+        }
+
         // Create array of all non-existing artists
         List<Artist> artistsToAdd = Arrays.stream(saveTopArtistDtos)
                 .map(topArtistToArtistMapper::TopArtistDtoArtist)
                 .filter(artist -> artistRepository.findBySpotifyId(artist.getSpotifyId()).isEmpty())
                 .collect(Collectors.toList());
 
-        // Insert this array into database
+        // Insert artist array into database
         if (!artistsToAdd.isEmpty()) {
             artistRepository.saveAll(artistsToAdd);
         }
 
-        // Clear current TopArtists
-        if (topArtistRepository.count() > 0) {
-            topArtistRepository.deleteAll();
-        }
+        user.clearTopArtists();
 
         // Create array of Top Artists To Add
         List<TopArtist> topArtistsToAdd = Arrays.stream(saveTopArtistDtos)
@@ -136,6 +142,7 @@ public class TopArtistController {
 
         return ResponseEntity.ok("Top artists added successfully.");
     }
+
 
 
 }
